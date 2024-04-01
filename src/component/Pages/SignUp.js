@@ -170,7 +170,7 @@ const SignUp = () => {
                 {isSignUp && <button >LogIn</button>}
               </div>
              { isSignUp && <div className={style.forgot}>
-                <a href='#'>Forgot Password</a></div>}
+                <button className={style.forgotPass}>Forgot Password</button></div>}
             </div>
           </form>
           <div className={`${errorMsg ? style.errors :style.error} ${successMsg ? style.success : style.error}` }>

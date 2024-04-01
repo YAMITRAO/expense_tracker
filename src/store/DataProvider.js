@@ -65,7 +65,34 @@ const DataProvider = (props) => {
         catch(error){
             console.log("UPDATE_ERROR", error);
         }
-       
+    }
+
+    const varificarionhandler = async(data) => {
+        console.log("Verification clicked");
+
+        try{
+            const response = await fetch('https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=AIzaSyDwcYCFrLAPoOvfWZN6fmD6d8Luyojx3Fw', {
+                method:"POST",
+                body: JSON.stringify({
+                    requestType: "VERIFY_EMAIL",
+                    idToken: state.userData.idToken,
+                }),
+                headers:{
+                    'Content-type':"application/json"
+                }
+            })
+
+            if(!response.ok){
+                const data = await response.json();
+                throw new Error(data.error.message);
+            }
+            const data = await response.json();
+            console.log(data);
+
+        }
+        catch(error){
+            console.log("Verification_SEND", error);
+        }
 
     }
 
@@ -73,7 +100,8 @@ const DataProvider = (props) => {
         isSuccessfullyLogin: state.isSuccessfullyLogin,
         userData: state.userData,
         handleLogin : loginHandler,
-        updateProfileHandler : profileHandler 
+        updateProfileHandler : profileHandler ,
+        verifyEmail: varificarionhandler,
     }
   return (
     <DataContext.Provider value={data}>{props.children}</DataContext.Provider>

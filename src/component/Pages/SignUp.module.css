@@ -128,6 +128,15 @@ opacity: 0.7;
    text-align: center;
 }
 
+.forgotPass{
+    background-color: inherit;
+    color: blue;
+    text-decoration: underline;
+    border : none;
+    font-size: 16px;
+    font-family: monospace;
+    margin-top: 5px;
+}
 
 
 
