@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import style from "./SignUp.module.css"
 
+
 const signUpurl = 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyDwcYCFrLAPoOvfWZN6fmD6d8Luyojx3Fw';
 const loginurl = 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyDwcYCFrLAPoOvfWZN6fmD6d8Luyojx3Fw';
 const SignUp = () => {

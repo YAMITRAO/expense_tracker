@@ -8,10 +8,12 @@
 }
 .profileTab{
     background-color: rgb(228, 194, 194);
-    
+    font-size: 12px;
     border-radius: 10px;
     padding:5px 10px;
     box-sizing: content-box;
+    max-width: 400px;
+    text-wrap: wrap;
 }
 .profileTab > button{
     border: none;
