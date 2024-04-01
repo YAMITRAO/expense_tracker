@@ -3,7 +3,10 @@ import Project from "./component/Project";
 
 function App() {
   return (
+    
     <Project/>
+   
+    
   );
 }
 

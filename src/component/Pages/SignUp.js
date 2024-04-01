@@ -135,7 +135,7 @@ const SignUp = () => {
          <div className={style.formContainer}>
           {isSignUp && <h1>SignUp</h1>}
           {!isSignUp && <h1>Login</h1>}
-          isSignUp && <form onSubmit={isSignUp ?formSignUpSubmitHandler : formLoginSubmitHandler}> 
+         <form onSubmit={isSignUp ?formSignUpSubmitHandler : formLoginSubmitHandler}> 
             <div className={style.inputContainer}>
 
               <div className={style.emailContainer}>
@@ -157,8 +157,8 @@ const SignUp = () => {
                 {isSignUp && <button>SignUp</button>}
                 {!isSignUp && <button >LogIn</button>}
               </div>
-              <div className={style.forgot}>
-                <a href='#'>Forgot Password</a></div>
+             { !isSignUp && <div className={style.forgot}>
+                <a href='#'>Forgot Password</a></div>}
             </div>
           </form>
           <div className={`${errorMsg ? style.errors :style.error} ${successMsg ? style.success : style.error}` }>
@@ -167,7 +167,7 @@ const SignUp = () => {
          </div>
 
          {isSignUp && <div className={style.haveLogin}>Have an Account? <button onClick={()=> setIsSignUp(false)}>Login</button></div>}
-         {!isSignUp && <div className={style.haveSignUp}>Do't Have Account? <button onClick={()=> setIsSignUp(true)}>SignUp</button></div>}
+         {!isSignUp && <div className={style.haveSignUp}>Do't Have an Account? <button onClick={()=> setIsSignUp(true)}>SignUp</button></div>}
    </div>
   )
 }
