@@ -1,10 +1,16 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import style from "./SignUp.module.css"
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
+import DataContext from '../../store/DataContext';
 
 
 const signUpurl = 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyDwcYCFrLAPoOvfWZN6fmD6d8Luyojx3Fw';
 const loginurl = 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyDwcYCFrLAPoOvfWZN6fmD6d8Luyojx3Fw';
 const SignUp = () => {
+
+  const ctx = useContext(DataContext);
+  
+  const hist = useHistory();
 
 
   const [errorMsg, setErrorMsg] = useState();
@@ -41,7 +47,7 @@ const SignUp = () => {
       data && setSuccessMsg("SuccessFully SignUp")
       data &&  setTimeout( () => {
         setSuccessMsg();
-        setIsSignUp(false);
+        setIsSignUp(true);
       }, 1500)
       setEmailValue( "");
       setPaswordValue("");
@@ -77,8 +83,13 @@ const SignUp = () => {
     const data = await response.json();
       data && setSuccessMsg("Login Successfully")
       data &&  setTimeout( () => {
+        ctx.handleLogin({
+          type:"LOGIN_SUCCESS",
+          data: data,
+        })
         setSuccessMsg();
-        setIsSignUp(false);
+        hist.push("/welcome")
+        setIsSignUp(true);
       }, 1500)
     setEmailValue("");
     setPaswordValue("");
@@ -134,9 +145,9 @@ const SignUp = () => {
   return (
    <div className={style.container}>
          <div className={style.formContainer}>
-          {isSignUp && <h1>SignUp</h1>}
-          {!isSignUp && <h1>Login</h1>}
-         <form onSubmit={isSignUp ?formSignUpSubmitHandler : formLoginSubmitHandler}> 
+          {!isSignUp && <h1>SignUp</h1>}
+          {isSignUp && <h1>Login</h1>}
+         <form onSubmit={!isSignUp ?formSignUpSubmitHandler : formLoginSubmitHandler}> 
             <div className={style.inputContainer}>
 
               <div className={style.emailContainer}>
@@ -149,16 +160,16 @@ const SignUp = () => {
                 <input type="password"  placeholder='Enter password '  onChange={(e) => setPaswordValue(e.target.value)} value={passwordValue} required/>
               </div>
 
-              {isSignUp && <div className={style.confirmPasswordContainer}>
+              {!isSignUp && <div className={style.confirmPasswordContainer}>
                 <label htmlFor='password'>Confirm Password<sup>*</sup></label>
                 <input type="password"  placeholder='Re-enter password ' required onChange={ (e)=> setConfirmPasswordValue(e.target.value)} value={confirmPasswordValue}/>
               </div>}
 
               <div className={style.submitButton}>
-                {isSignUp && <button>SignUp</button>}
-                {!isSignUp && <button >LogIn</button>}
+                {!isSignUp && <button>SignUp</button>}
+                {isSignUp && <button >LogIn</button>}
               </div>
-             { !isSignUp && <div className={style.forgot}>
+             { isSignUp && <div className={style.forgot}>
                 <a href='#'>Forgot Password</a></div>}
             </div>
           </form>
@@ -167,8 +178,8 @@ const SignUp = () => {
           </div>
          </div>
 
-         {isSignUp && <div className={style.haveLogin}>Have an Account? <button onClick={()=> setIsSignUp(false)}>Login</button></div>}
-         {!isSignUp && <div className={style.haveSignUp}>Do't Have an Account? <button onClick={()=> setIsSignUp(true)}>SignUp</button></div>}
+         {!isSignUp && <div className={style.haveLogin}>Have an Account? <button onClick={()=> setIsSignUp(true)}>Login</button></div>}
+         {isSignUp && <div className={style.haveSignUp}>Do't Have an Account? <button onClick={()=> setIsSignUp(false)}>SignUp</button></div>}
    </div>
   )
 }

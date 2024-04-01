@@ -2,13 +2,18 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
+import DataProvider from './store/DataProvider';
+import { BrowserRouter } from 'react-router-dom/cjs/react-router-dom.min';
+
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
- 
-    <App />
-
+<DataProvider>
+    <BrowserRouter>
+     <App />
+    </BrowserRouter>
+</DataProvider>
 );
 
 // If you want to start measuring performance in your app, pass a function
