@@ -88,7 +88,7 @@ const SignUp = () => {
           data: data,
         })
         setSuccessMsg();
-        hist.push("/welcome")
+        hist.push("/verification")
         setIsSignUp(true);
       }, 1500)
     setEmailValue("");

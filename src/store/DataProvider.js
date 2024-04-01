@@ -1,5 +1,6 @@
 import React, { useReducer } from 'react'
 import DataContext from './DataContext'
+import { useHistory } from 'react-router-dom/cjs/react-router-dom';
 
 const reducer = (state, action) => {
     if(action.type === "LOGIN_SUCCESS" || action.type === "UPDATE_SUCCESS"){
@@ -13,11 +14,21 @@ const reducer = (state, action) => {
             ...state,    
         }
     }
+    if(action.type === "LOGOUT"){
+        state.isSuccessfullyLogin = false;
+        state.userData = {}
+        return { 
+            ...state,
+         }
+
+    }
     return state
 }
 
 
 const DataProvider = (props) => {
+
+    const hist = useHistory();
     const [state, dispatchFun] = useReducer(reducer, {
         isSuccessfullyLogin: false,
         userData:{},
@@ -83,17 +94,27 @@ const DataProvider = (props) => {
             })
 
             if(!response.ok){
+                
                 const data = await response.json();
                 throw new Error(data.error.message);
             }
             const data = await response.json();
             console.log(data);
+            hist.push("/welcome");
 
         }
         catch(error){
+            hist.push("/welcome");
             console.log("Verification_SEND", error);
         }
 
+    }
+
+    const handelLogout = () => {
+        
+        dispatchFun({
+            type:"LOGOUT"
+        })
     }
 
     let data = {
@@ -102,6 +123,7 @@ const DataProvider = (props) => {
         handleLogin : loginHandler,
         updateProfileHandler : profileHandler ,
         verifyEmail: varificarionhandler,
+        logoutHandler: handelLogout,
     }
   return (
     <DataContext.Provider value={data}>{props.children}</DataContext.Provider>
