@@ -1,15 +1,38 @@
-import React, { useContext } from 'react'
+import React, { useContext, useRef, useState } from 'react'
 import style from "./ExpenseList.module.css"
+import { createPortal } from 'react-dom'
 
 import DataContext from '../../../../store/DataContext'
+import EditExpense from '../../EditExpense/EditExpense'
+import ExpenseMap from './ExpenseMap'
+
 
 const ExpenseList = () => {
     const ctx = useContext(DataContext);
     const listData = ctx.expenseList;
-    console.log(listData);
+
+    const amountRef = useRef();
+    const descRef = useRef();
+    const cateRef = useRef();
+    
+    const [editData, setEditData] = useState({})    
+
+    const [isEdit, setIsEdit] = useState(false);
     
       let totalExpense = 0
+
+      const onEditForm = (e) => {
+        setIsEdit(false);
+      }
+
+      const dataFromEditButton = (data) => {
+        setEditData( data );
+      }
+
+      
+      
   return (
+    <>
      <div className={style.container}>
 
 {listData.length >0  && <div className={style.itemContainer}>
@@ -24,17 +47,11 @@ const ExpenseList = () => {
                 </tr>
             </thead>
             <tbody>
-                {listData && listData.map( (val) => {
+                 {listData && listData.map( (val) => {
                     totalExpense += +val.amount;
-                    return   <tr key={val.id}>
-                    <td>{val.amount}</td>
-                    <td>{val.desc} </td>
-                    <td>{val.cate}</td>
-                    <td>
-                        <button type="button" value={val.id} className={style.edit}>Edit</button>
-                    </td>
-                    <td> <button type="button" value={val.id} className={style.delete} onClick={(e)=> ctx.deleteHandler(e.target.value)}>Delete</button></td>
-                   </tr>
+                    console.log(val);
+                    return  <ExpenseMap data={val} onEdit={ ()=>setIsEdit(true)} backData={dataFromEditButton}/>
+
                 })}
             </tbody>
             <tfoot>
@@ -45,8 +62,11 @@ const ExpenseList = () => {
             </tfoot>
          </table>
        </div>}
-
     </div>
+    {isEdit && createPortal(<EditExpense  editClick={onEditForm} 
+    data = {editData}
+    />, document.getElementById('layout'))}
+    </>
   )
 }
 

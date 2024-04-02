@@ -42,6 +42,7 @@ const reducer = (state, action) => {
             state.expenseList.push({
                 ...loaded_data
             })
+            console.log(state.expenseList);
         }
         return{
             ...state
@@ -62,6 +63,7 @@ const getApi = async() => {
             throw new Error(data.error.message);
         }
         const data = await response.json();
+        console.log(data)
          dispatchFun({
             type:"LOAD_DATA",
             data:data,
@@ -121,7 +123,33 @@ const postApi = async(my_data) => {
     }
 }
 
+const putApi = async(my_data) => {
+    try{
+        let putUrl = `${url}/${my_data.id}.json`
+        console.log("We are at put api");
+        const response = await fetch(putUrl, {
+            method:"PUT",
+            body:JSON.stringify({
+                ...my_data.data
+            }),
+            headers:{
+                'Content-type': "application/json"
+            }
+        })
+        if(!response.ok){
+            const data = await response.json();
+            throw new Error(data.error.message);
+        }
+        console.log("Update succesfully at server");
+    }
+    catch(error){
+        console.log("PUT_API_ERROR", error);
+
+    }
+}
+
     const hist = useHistory();
+
     const [state, dispatchFun] = useReducer(reducer, {
         isSuccessfullyLogin: false,
         userData:{},
@@ -225,6 +253,23 @@ const postApi = async(my_data) => {
         await getApi();
     }
 
+    const handleUpdate = async(data) => {
+        console.log("Update request is here");
+        console.log(data);
+        await putApi({
+            id:data.id,
+            data: {data:{
+                amount:data.amount,
+                desc:data.desc,
+                cate:data.cate,
+            }
+            }
+            
+        })
+        await getApi();
+       
+    }
+
    
 
     let data = {
@@ -237,7 +282,7 @@ const postApi = async(my_data) => {
         expenseList: state.expenseList,
         expensehandler:handleExpense,
         deleteHandler: handleDelete,
-        
+        updateHandler : handleUpdate,
     }
   return (
     <DataContext.Provider value={data}>{props.children}</DataContext.Provider>

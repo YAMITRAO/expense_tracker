@@ -6,6 +6,7 @@ import { Switch, Route  } from 'react-router-dom/cjs/react-router-dom.min'
 import DataContext from '../store/DataContext'
 import EmailVarify from './EmailVarify/EmailVarify'
 import Logout from './Pages/Logout/Logout'
+import EditExpense from './Pages/EditExpense/EditExpense'
 
 
 
@@ -15,7 +16,8 @@ const Project = () => {
   return (
     <>
    <Switch>
-     <Route exact  path="/">  <SignUp/> </Route>
+     {/* <Route exact  path="/">  <SignUp/> </Route> */}
+     <Route exact  path="/">  <Welcome/> </Route>
      <Route path="/welcome"> { isLogin ? <SignUp/>  : <Welcome />} </Route>
      <Route path='/profile'> { isLogin ? <SignUp/>  :<Profile/> }</Route>
      <Route path="/verification">{isLogin ? <SignUp/>  : <EmailVarify/>}</Route>

@@ -1,0 +1,72 @@
+.container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height:100vh;
+    position: fixed;
+    top:0px;
+    left:0px;
+    width:100vw;
+    background-color: rgba(133, 133, 131, 0.7);
+
+}
+
+.formContainer{
+    
+    padding:10px 20px 30px 20px;
+    background-color: rgb(110, 155, 172);
+    border-radius: 8px;
+}
+
+
+input{
+    font-size: 16px;
+    margin-left: 10px;
+}
+
+.descContainer{
+    display: flex;
+    justify-content: center;
+}
+
+.cateContainer > select{
+    margin-left: 10px;
+    width:90%;
+    height: 32px;
+    border: 2px solid gray;
+    border-radius: 8px;
+}
+
+.buttonContainer{
+    display: flex;
+    justify-content: space-around;
+}
+
+.updateButton, .cancleButton{
+    border: none;
+    width:30%;
+    font-size: 20px;
+    font-family: monospace;
+    font-weight: bold;
+    cursor: pointer;
+    padding: 8px 0px;
+    border-radius: 5px;
+    margin-top: 10px;
+    color: white;
+}
+.updateButton:hover, .cancleButton:hover{
+    scale:1.02;
+}
+.updateButton{
+    background-color: rgb(95, 192, 95);
+}
+
+.cancleButton{
+    background-color: rgb(205, 107, 107);
+}
+
+h1{
+    text-align: center;
+    font-family: monospace;
+}
+
