@@ -6,6 +6,7 @@ import DataContext from '../../../../store/DataContext'
 const ExpenseList = () => {
     const ctx = useContext(DataContext);
     const listData = ctx.expenseList;
+    console.log(listData);
     
       let totalExpense = 0
   return (
@@ -32,7 +33,7 @@ const ExpenseList = () => {
                     <td>
                         <button type="button" value={val.id} className={style.edit}>Edit</button>
                     </td>
-                    <td> <button type="button" value={val.id} className={style.delete}>Delete</button></td>
+                    <td> <button type="button" value={val.id} className={style.delete} onClick={(e)=> ctx.deleteHandler(e.target.value)}>Delete</button></td>
                    </tr>
                 })}
             </tbody>

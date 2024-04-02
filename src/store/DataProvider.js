@@ -2,7 +2,7 @@ import React, { useReducer } from 'react'
 import DataContext from './DataContext'
 import { useHistory } from 'react-router-dom/cjs/react-router-dom';
 
-const url = 'https://moviereactapp-3a393-default-rtdb.asia-southeast1.firebasedatabase.app/expense_data.json'
+const url = 'https://moviereactapp-3a393-default-rtdb.asia-southeast1.firebasedatabase.app/expense_data'
 
 
 const reducer = (state, action) => {
@@ -28,9 +28,19 @@ const reducer = (state, action) => {
     if(action.type === "LOAD_DATA"){
         state.expenseList = [];
         for( let key in action.data ){
-            state.expenseList.push({
+            console.log("the key is ");
+            console.log(key);
+            let loaded_data = {
                 id:key,
-                ...action.data[key].data
+                amount: action.data[key].data.amount,
+                desc: action.data[key].data.desc,
+                cate: action.data[key].data.cate,
+
+            }
+            console.log("formed data is");
+            console.log(loaded_data);
+            state.expenseList.push({
+                ...loaded_data
             })
         }
         return{
@@ -45,7 +55,8 @@ const DataProvider = (props) => {
 
 const getApi = async() => {
     try{
-        const response = await fetch(url);
+        let getUrl = `${url}.json`
+        const response = await fetch(getUrl);
         if(!response.ok){
             const data = await response.json();
             throw new Error(data.error.message);
@@ -62,9 +73,33 @@ const getApi = async() => {
     
 }
 
+const deleteApi = async(delete_id) => {
+    let deleteUrl = `${url}/${delete_id}.json`
+    console.log(deleteUrl);
+    try{
+        const response = await fetch(deleteUrl,{
+            method:"DELETE",
+            headers:{
+                'Content-type' : "application/json"
+            }
+        })
+
+        if(!response.ok){
+            const data = await response.json();
+            throw new Error(data.error.message);
+        }
+        const data = await response.json();
+        console.log("Deleted successfully", data);
+    }
+    catch(error){
+        console.log("API_DELETE_ERROR",error)
+    }
+}
+
 const postApi = async(my_data) => {
     try{
-        const response = await fetch(url, {
+        let postUrl = `${url}.json`
+        const response = await fetch(postUrl, {
             method:"POST",
             body:JSON.stringify({
                 data:my_data
@@ -78,7 +113,7 @@ const postApi = async(my_data) => {
             const data = await response.json();
             throw new Error(data.error.message);
         }
-        const data = await response.json();
+        // const data = await response.json();
         // console.log(data);
     }
     catch(error){
@@ -184,6 +219,12 @@ const postApi = async(my_data) => {
         // dispatchFun( fun_data);
     }
 
+    const handleDelete = async(delete_id) => {
+        console.log("Delete the data of id", delete_id);
+        await deleteApi(delete_id);
+        await getApi();
+    }
+
    
 
     let data = {
@@ -195,6 +236,7 @@ const postApi = async(my_data) => {
         logoutHandler: handelLogout,
         expenseList: state.expenseList,
         expensehandler:handleExpense,
+        deleteHandler: handleDelete,
         
     }
   return (

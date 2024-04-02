@@ -23,7 +23,6 @@ const ExpenseForm = () => {
         let data = {
             type:"ADD_TO_EXPENSE",
             data:{
-                id: (Math.random()*10 + Math.random()*11 + 'd'),
                 amount:amountValue,
                 desc:descValue,
                 cate:cateValue,
