@@ -1,6 +1,7 @@
 import React from 'react'
 import style from "./Welcome.module.css";
 import { Link } from 'react-router-dom/cjs/react-router-dom.min';
+import Expense from '../Expense/Expense';
 
 
 const Welcome = () => {
@@ -14,7 +15,9 @@ const Welcome = () => {
         </button>
         </div>
     </div>
-    <hr/></>
+    <hr/>
+    <Expense/>
+    </>
   )
 }
 

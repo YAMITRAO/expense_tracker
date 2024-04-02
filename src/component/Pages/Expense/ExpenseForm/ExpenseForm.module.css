@@ -1,0 +1,52 @@
+.containerForm{
+  
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.inputContainer{
+  
+    display: flex;
+    flex-direction: column;
+}
+
+.inputContainer > label{
+ 
+    font-size: 16px;
+    font-family: monospace;
+    font-weight: bold;
+}
+
+.inputContainer> input, select{
+    font-size: 16px;
+    border-radius: 6px;
+    margin-bottom: 8px;
+}
+
+.inputContainer> select{
+    font-size: 16px;
+    height:30px;
+}
+
+.inputContainer > div{
+    display: flex;
+    justify-content: space-around;
+}
+
+.inputContainer > div > button{
+    margin-top: 10px;
+    width:40%;
+    background-color: gray;
+    border-radius: 8px;
+    cursor: pointer;
+    border: none;
+    font-size: 16px;
+    color:white;
+    padding: 8px 0px;
+    font-weight: bold;
+}
+
+.inputContainer > div > button:hover{
+    scale: 1.05;
+}

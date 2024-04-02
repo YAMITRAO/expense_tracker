@@ -22,6 +22,13 @@ const reducer = (state, action) => {
          }
 
     }
+
+    if(action.type === "ADD_TO_EXPENSE"){
+        state.expenseList.push(action.data);
+        return {
+            ...state
+        }
+    }
     return state
 }
 
@@ -32,6 +39,9 @@ const DataProvider = (props) => {
     const [state, dispatchFun] = useReducer(reducer, {
         isSuccessfullyLogin: false,
         userData:{},
+        expenseList:[
+            
+        ],
     })
 
     const loginHandler = (fun_data) => {
@@ -117,6 +127,12 @@ const DataProvider = (props) => {
         })
     }
 
+    const handleExpense =  (fun_data) => {
+        console.log("Exense added");
+        console.log(data);
+        dispatchFun( fun_data);
+    }
+
    
 
     let data = {
@@ -126,6 +142,8 @@ const DataProvider = (props) => {
         updateProfileHandler : profileHandler ,
         verifyEmail: varificarionhandler,
         logoutHandler: handelLogout,
+        expenseList: state.expenseList,
+        expensehandler:handleExpense,
         
     }
   return (
