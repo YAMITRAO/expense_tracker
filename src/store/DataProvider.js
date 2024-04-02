@@ -2,9 +2,11 @@ import React, { useReducer } from 'react'
 import DataContext from './DataContext'
 import { useHistory } from 'react-router-dom/cjs/react-router-dom';
 
+const url = 'https://moviereactapp-3a393-default-rtdb.asia-southeast1.firebasedatabase.app/expense_data.json'
+
+
 const reducer = (state, action) => {
     if(action.type === "LOGIN_SUCCESS" || action.type === "UPDATE_SUCCESS"){
-        console.log("Updating the data");
         state.isSuccessfullyLogin = true;
         state.userData = {
             ...state.userData,
@@ -23,9 +25,15 @@ const reducer = (state, action) => {
 
     }
 
-    if(action.type === "ADD_TO_EXPENSE"){
-        state.expenseList.push(action.data);
-        return {
+    if(action.type === "LOAD_DATA"){
+        state.expenseList = [];
+        for( let key in action.data ){
+            state.expenseList.push({
+                id:key,
+                ...action.data[key].data
+            })
+        }
+        return{
             ...state
         }
     }
@@ -34,6 +42,49 @@ const reducer = (state, action) => {
 
 
 const DataProvider = (props) => {
+
+const getApi = async() => {
+    try{
+        const response = await fetch(url);
+        if(!response.ok){
+            const data = await response.json();
+            throw new Error(data.error.message);
+        }
+        const data = await response.json();
+         dispatchFun({
+            type:"LOAD_DATA",
+            data:data,
+        });
+    }
+    catch(error){
+        console.log("GET_API_ERROR");
+    }
+    
+}
+
+const postApi = async(my_data) => {
+    try{
+        const response = await fetch(url, {
+            method:"POST",
+            body:JSON.stringify({
+                data:my_data
+            }),
+            headers:{
+                'Content-type':"application/json"
+            }
+        })
+
+        if(!response.ok){
+            const data = await response.json();
+            throw new Error(data.error.message);
+        }
+        const data = await response.json();
+        // console.log(data);
+    }
+    catch(error){
+        console.log("POST_API_ERROR", error)
+    }
+}
 
     const hist = useHistory();
     const [state, dispatchFun] = useReducer(reducer, {
@@ -45,13 +96,11 @@ const DataProvider = (props) => {
     })
 
     const loginHandler = (fun_data) => {
-        console.log('login data by google auth api is' );
-        console.log(fun_data.data);
-        console.log(fun_data.type);
         dispatchFun( {
             type: fun_data.type,
             data: fun_data.data,
         })
+        getApi();
     }
 
     const profileHandler = async( fun_data) => {
@@ -127,10 +176,12 @@ const DataProvider = (props) => {
         })
     }
 
-    const handleExpense =  (fun_data) => {
+    const handleExpense =  async (fun_data) => {
         console.log("Exense added");
-        console.log(data);
-        dispatchFun( fun_data);
+        console.log(fun_data.data);
+       await postApi(fun_data.data);
+       await getApi();
+        // dispatchFun( fun_data);
     }
 
    
