@@ -2,6 +2,7 @@ import React, { useContext, useState } from 'react'
 import style from "./SignUp.module.css"
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import DataContext from '../../store/DataContext';
+import ForgotPass from './ForgotPass/ForgotPass';
 
 
 const signUpurl = 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyDwcYCFrLAPoOvfWZN6fmD6d8Luyojx3Fw';
@@ -21,6 +22,7 @@ const SignUp = () => {
   const [confirmPasswordValue, setConfirmPasswordValue] = useState();
 
   const [isSignUp, setIsSignUp] = useState(true);
+  const [isForgot, setIsForgot] = useState(false);
   
 
   const signUpApi = async(email, pass) =>{
@@ -88,7 +90,7 @@ const SignUp = () => {
           data: data,
         })
         setSuccessMsg();
-        hist.push("/verification")
+        hist.push("/welcome")
         setIsSignUp(true);
       }, 1500)
     setEmailValue("");
@@ -142,6 +144,17 @@ const SignUp = () => {
     loginApi(enteredEmail, enteredPassword);
   }
 
+  if(isForgot){
+    
+    return <>
+    <div className={style.forgotCancle}>
+      <button type="button" onClick={()=> setIsForgot(false)}>X</button>
+    </div>
+    <ForgotPass />
+    
+    </>
+  }
+
   return (
    <div className={style.container}>
          <div className={style.formContainer}>
@@ -170,7 +183,7 @@ const SignUp = () => {
                 {isSignUp && <button >LogIn</button>}
               </div>
              { isSignUp && <div className={style.forgot}>
-                <button className={style.forgotPass}>Forgot Password</button></div>}
+                <button type="button" className={style.forgotPass} onClick={() => setIsForgot(true)}>Forgot Password</button></div>}
             </div>
           </form>
           <div className={`${errorMsg ? style.errors :style.error} ${successMsg ? style.success : style.error}` }>

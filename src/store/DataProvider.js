@@ -117,6 +117,8 @@ const DataProvider = (props) => {
         })
     }
 
+   
+
     let data = {
         isSuccessfullyLogin: state.isSuccessfullyLogin,
         userData: state.userData,
@@ -124,6 +126,7 @@ const DataProvider = (props) => {
         updateProfileHandler : profileHandler ,
         verifyEmail: varificarionhandler,
         logoutHandler: handelLogout,
+        
     }
   return (
     <DataContext.Provider value={data}>{props.children}</DataContext.Provider>

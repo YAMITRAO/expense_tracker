@@ -19,6 +19,7 @@ const Project = () => {
      <Route path="/welcome"> { isLogin ? <SignUp/>  : <Welcome />} </Route>
      <Route path='/profile'> { isLogin ? <SignUp/>  :<Profile/> }</Route>
      <Route path="/verification">{isLogin ? <SignUp/>  : <EmailVarify/>}</Route>
+     <Route path="*"><div style={{textAlign:"center", fontSize:"30px", marginTop:"30px"}}>Error_Bad_URL Entered</div></Route>
     </Switch>
     {!isLogin && <Logout/>}
     </>

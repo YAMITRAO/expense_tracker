@@ -129,6 +129,7 @@ opacity: 0.7;
 }
 
 .forgotPass{
+    cursor: pointer;
     background-color: inherit;
     color: blue;
     text-decoration: underline;
@@ -137,6 +138,30 @@ opacity: 0.7;
     font-family: monospace;
     margin-top: 5px;
 }
+.forgotPass:hover{
+    color: blue;
+    text-decoration: none;
+
+}
+
+.forgotCancle {
+   position: fixed;
+   top:50px;
+   right: 50px;
+}
+
+.forgotCancle> button{
+    cursor: pointer;
+    font-size: 30px;
+    border: none;
+    background-color: transparent;
+    color: rgb(168, 58, 25);
+}
+
+.forgotCancle > button:hover{
+    scale: 1.05;
+}
+
 
 
 
