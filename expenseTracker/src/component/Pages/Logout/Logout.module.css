@@ -1,0 +1,27 @@
+.container{
+    width:100%;
+    position: fixed;
+    bottom: 10px;
+    display:flex;
+    justify-content: flex-start;
+    margin-left: 20px;
+}
+
+.logoutContainer > button{
+    cursor: pointer;
+    border: none;
+    padding:10px;
+    font-size: 16px;
+    font-family: monospace;
+    background-color: rgb(24, 145, 156);
+    border-radius: 8px;
+    color:white;
+    font-weight: bold;
+}
+
+.logoutContainer > button:hover{
+    scale: 1.02;
+    background-color: rgb(23, 159, 171);
+
+
+}

@@ -1,0 +1,27 @@
+tbody>tr:nth-child(odd){
+    background: rgb(241, 229, 230) ;
+ }
+ tbody>tr:nth-child(even){
+    background: rgb(185, 230, 232) ;
+ }
+ 
+.edit,.delete{
+    cursor: pointer;
+    background-color: transparent ;
+    border: none;
+    font-size: 16px;
+    font-family: monospace;
+    font-weight: bold;
+}
+
+.edit:hover, .delete:hover{
+    scale:1.02;
+}
+
+.edit{
+    color: rgb(28, 158, 14);
+}
+
+.delete{
+    color: rgb(154, 14, 14);
+}

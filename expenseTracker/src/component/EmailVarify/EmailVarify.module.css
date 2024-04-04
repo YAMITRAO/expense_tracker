@@ -1,0 +1,46 @@
+.container{
+    
+    height:100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.emailContainer{
+    width:auto;
+    display: flex;
+    flex-direction: column;
+    /* align-items: center; */
+}
+
+.emailContainer > label{
+    margin-bottom: 10px;
+    font-size: 22px;
+    font-weight: bold;
+    color: rgb(43, 153, 144);
+    font-family: monospace;
+}
+
+.emailContainer > input {
+    font-size: 22px;
+    color: gray;
+    border-radius: 5px;
+}
+
+
+.emailContainer > button {
+    cursor: pointer;
+    font-size: 16px;
+    font-family: monospace;
+    font-weight: bold;
+    /* color: rgb(43, 153, 144); */
+    color:white;
+    width:30%;
+    border: none;
+    border-radius: 5px;
+    padding:8px 5px;
+    background-color: rgb(16, 120, 129);
+}
+
+.emailContainer > button:hover {
+    scale: 1.02;
+}

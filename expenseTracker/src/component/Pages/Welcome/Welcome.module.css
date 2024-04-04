@@ -1,0 +1,29 @@
+.container{
+    display:flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin:  20px;
+    font-family: monospace;
+    font-size: 16px;
+}
+.profileTab{
+    background-color: rgb(228, 194, 194);
+    
+    border-radius: 10px;
+    padding:5px 10px;
+    box-sizing: content-box;
+}
+.profileTab > button{
+    cursor: pointer;
+    border: none;
+    outline: none;
+    background-color: inherit;
+    color: blue;
+    font-size: inherit;
+    font-family: inherit;
+} 
+
+.profileTab > button:hover {
+    color: rgb(15, 15, 198);
+    scale: 1.02;
+}
