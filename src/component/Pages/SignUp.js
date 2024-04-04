@@ -3,14 +3,17 @@ import style from "./SignUp.module.css"
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import DataContext from '../../store/DataContext';
 import ForgotPass from './ForgotPass/ForgotPass';
+import {  useDispatch } from 'react-redux';
+import { authAction } from '../../store/CentralReduxReducer/auth-slice';
+import { getApi } from '../../store/Api/Api';
+import { expenseAction } from '../../store/CentralReduxReducer/expense-slice';
 
 
 const signUpurl = 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyDwcYCFrLAPoOvfWZN6fmD6d8Luyojx3Fw';
 const loginurl = 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyDwcYCFrLAPoOvfWZN6fmD6d8Luyojx3Fw';
 const SignUp = () => {
 
-  const ctx = useContext(DataContext);
-  
+  const dispatch = useDispatch();
   const hist = useHistory();
 
 
@@ -54,7 +57,6 @@ const SignUp = () => {
       setEmailValue( "");
       setPaswordValue("");
       setConfirmPasswordValue("");
-
       console.log(data);
     }
     catch(error){
@@ -81,14 +83,17 @@ const SignUp = () => {
         console.log(data);
         throw new Error(data.error.message);
     }
-
+    let s_data = await getApi(); 
     const data = await response.json();
       data && setSuccessMsg("Login Successfully")
       data &&  setTimeout( () => {
-        ctx.handleLogin({
-          type:"LOGIN_SUCCESS",
-          data: data,
-        })
+        
+         if(s_data){
+          console.log(s_data);
+          dispatch( expenseAction.expenseListHandler(s_data));
+         }
+        dispatch( authAction.loginhandler(data));
+        // dispatch( expenseAction.expenseListHandler(s_data));
         setSuccessMsg();
         hist.push("/welcome")
         setIsSignUp(true);
@@ -96,6 +101,7 @@ const SignUp = () => {
     setEmailValue("");
     setPaswordValue("");
     setTimeout( () => {  setSuccessMsg()},1500)
+    
   }
   catch(error){
     console.log("AUTH_ERROR", error);

@@ -1,15 +1,19 @@
 import React, { useContext, useState } from 'react'
 import style from "./ExpenseForm.module.css"
-import DataContext from '../../../../store/DataContext';
+import { useDispatch } from 'react-redux';
+import { expenseAction } from '../../../../store/CentralReduxReducer/expense-slice';
+import { getApi, postApi } from '../../../../store/Api/Api';
 
 const ExpenseForm = () => {
-    const ctx = useContext(DataContext);
+    
+
+    const dispatch = useDispatch();
 
     const [amountValue, setAmountValue] = useState("");
     const [descValue, setDescValue] = useState("");
     const [cateValue, setCateValue] = useState("");
 
-    const formSubmitHandler = (e) => {
+    const formSubmitHandler = async(e) => {
         e.preventDefault();
         console.log(amountValue,descValue, cateValue);
         if(cateValue === 'Select' || cateValue === ""){
@@ -28,7 +32,10 @@ const ExpenseForm = () => {
                 cate:cateValue,
             }
         }
-        ctx.expensehandler(data);
+        await postApi(data.data);
+       const s_data=  await getApi();
+       dispatch( expenseAction.expenseListHandler(s_data));
+
         setAmountValue("");
         setDescValue("");
         setCateValue("Select");

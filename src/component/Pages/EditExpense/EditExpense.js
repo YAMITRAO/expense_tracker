@@ -4,26 +4,32 @@
  import DescriptionIcon from '@mui/icons-material/Description';
  import CategoryIcon from '@mui/icons-material/Category';
 import DataContext from '../../../store/DataContext';
+import { getApi, putApi } from '../../../store/Api/Api';
+import { useDispatch } from 'react-redux';
+import { expenseAction } from '../../../store/CentralReduxReducer/expense-slice';
 
  
  const EditExpense = (props) => {
     // console.log(props.data.amount);
-    const ctx = useContext(DataContext);
+    // const ctx = useContext(DataContext);
+    const dispatch = useDispatch();
     
     const [amountValue, setAmountValue] = useState(props.data.amount);
     const [descValue, setDescValue] = useState(props.data.desc);
     const [cateValue, setCateValue] = useState(props.data.cate);
 
-    const updateHandler = (e) =>{
+    const updateHandler = async(e) =>{
         let data = {
             id: props.data.id,
             amount: amountValue,
             desc:descValue,
             cate: cateValue,
         }
-        ctx.updateHandler(data);
+       await putApi(data);
+       let s_data = await getApi();
+       dispatch( expenseAction.expenseListHandler(s_data));
+        // ctx.updateHandler(data);
         props.editClick();
-
     }
    return (
      <div className={style.container}>

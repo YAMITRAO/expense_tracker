@@ -5,11 +5,13 @@ import { createPortal } from 'react-dom'
 import DataContext from '../../../../store/DataContext'
 import EditExpense from '../../EditExpense/EditExpense'
 import ExpenseMap from './ExpenseMap'
+import { useSelector } from 'react-redux'
 
 
 const ExpenseList = () => {
     const ctx = useContext(DataContext);
-    const listData = ctx.expenseList;
+    // const listData = ctx.expenseList;
+    const listData = useSelector(state => state.expenseData.expenseList);
 
     const amountRef = useRef();
     const descRef = useRef();
@@ -29,8 +31,6 @@ const ExpenseList = () => {
         setEditData( data );
       }
 
-      
-      
   return (
     <>
      <div className={style.container}>
@@ -51,7 +51,6 @@ const ExpenseList = () => {
                     totalExpense += +val.amount;
                     console.log(val);
                     return  <ExpenseMap data={val} onEdit={ ()=>setIsEdit(true)} backData={dataFromEditButton}/>
-
                 })}
             </tbody>
             <tfoot>
