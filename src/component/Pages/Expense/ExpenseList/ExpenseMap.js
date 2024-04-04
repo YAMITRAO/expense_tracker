@@ -34,8 +34,7 @@ const ExpenseMap = (props) => {
                             }>Edit</button>
                     </td>
                     <td> <button type="button" value={props.data.id}   className={style.delete}  onClick={ deleteHandler}>Delete</button></td>
-                    { (+props.data.amount >= 10000) && <td><button className={style.prime}>Prime</button>  </td>}
-                    { (+props.data.amount < 10000) && <td><button disabled className={style.inactive}>Prime</button>  </td>}
+                   
                    </tr>
   )
 }
